@@ -19,7 +19,7 @@ abstract class Plugins {
 /// README available [here](https://github.com/team-loxo/summernote-at-mention)
 class SummernoteAtMention extends Plugins {
   /// Function used to get the displayed suggestions on mobile
-  final List<String> Function(String)? getSuggestionsMobile;
+  final Future<List<String>> Function(String)? getSuggestionsMobile;
 
   /// List of mentions to display on Web. The default behavior is to only return
   /// the mentions containing the string entered by the user in the editor
