@@ -257,45 +257,6 @@ class _HtmlEditorWidgetMobileState extends State<HtmlEditorWidget> {
                               }''' : ''}
                               window.flutter_inappwebview.callHandler('totalChars', totalChars);
                           },
-                          onPaste: function (e) {
-                            var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
-                            if(args.content.match(/youtube\.com/) || args.content.match(/youtu\.be/)){
-                                e.preventDefault();
-                                var embedCode = bufferText.split('?');
-                                var sc = document.createElement('div'); sc.setAttribute("class", "video-container");
-                                if( embedCode.length > 1 ) {
-                                    var query_string = {};
-                                    embedCode[1].split('&').forEach( function(pair) {
-                                        pair = pair.split('=');
-                                        query_string[pair[0]] = decodeURIComponent(pair[1] || '');
-                                    });
-                                    if( query_string.v != undefined ) {
-                                        script = document.createElement("iframe"); // reuse var
-                                        script.setAttribute("src", 'https://www.youtube.com/embed/'+query_string.v);
-                                        script.setAttribute("width", 560);
-                                        script.setAttribute("height", 315);
-                                        script.setAttribute("frameborder", 0);
-                                        script.setAttribute("allow", "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture");
-                                        sc.innerHTML = script.outerHTML;
-                                        bufferText = sc.outerHTML;
-                                    }
-                                } else if( embedCode.length > 0 ){
-                                    var youtu_be_v = '';
-                                    if( embedCode[0].match(/youtu\.be/) ){
-                                        youtu_be_v = embedCode[0].split('/')[embedCode[0].split('/').length-1];
-                                        script = document.createElement("iframe"); // reuse var
-                                        script.setAttribute("src", 'https://www.youtube.com/embed/'+youtu_be_v);
-                                        script.setAttribute("width", 560);
-                                        script.setAttribute("height", 315);
-                                        script.setAttribute("frameborder", 0);
-                                        script.setAttribute("allow", "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture");
-                                        sc.innerHTML = script.outerHTML;
-                                        bufferText = sc.outerHTML;
-                                    }
-                                }
-                                setTimeout(function () { document.execCommand('insertText', false, bufferText); }, 10);
-                            }
-                          }
                       ''';
                       if (widget.plugins.isNotEmpty) {
                         summernoteToolbar = summernoteToolbar + "['plugins', [";
